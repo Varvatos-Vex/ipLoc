@@ -25,9 +25,24 @@ def home_view(request):
 
 
 def multiip(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file_data')
+        if uploaded_file is not None:
+            #print(uploaded_file.readlines)
+            handle_uploaded_file(uploaded_file)
+
+    if request.method == 'POST' and 'multiquery' in request.POST:
+        multiip_data = request.POST.get('multiquery')
+        print("TextBox {}" .format(multiip_data))
+
+    
     return render(request, "multiip.html")
 
 
+def handle_uploaded_file(f):
+    #for chunk in f.chunks():
+    for chunk in f:
+        print(chunk)
 
 
 
