@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import IP2Location
 import re
-
+import socket
 # Create your views here.
 
 
@@ -25,26 +25,49 @@ def home_view(request):
 
 
 def multiip(request):
+    data_check = []
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file_data')
         if uploaded_file is not None:
             #print(uploaded_file.readlines)
-            handle_uploaded_file(uploaded_file)
-
+            data_check = handle_uploaded_file(uploaded_file)
     if request.method == 'POST' and 'multiquery' in request.POST:
         multiip_data = request.POST.get('multiquery')
-        print("TextBox {}" .format(multiip_data))
+        #print("TextBox {}" .format(multiip_data))
+        if multiip_data is not None:
+            #print(multiip_data)
+            textBoxList = re.split('\r\n',multiip_data)
+            for ip in textBoxList:
+                if validate_ip(ip):
+                    data_check.append(ip)
 
-    
-    return render(request, "multiip.html")
+    renderData = []
+    if data_check:
+        for data in data_check:
+            renderData.append(ip2location(data))
+
+    #print(renderData) #Final Data to be Render in Table
+
+    return render(request, "multiip.html", context={"renderData": renderData})
 
 
 def handle_uploaded_file(f):
-    #for chunk in f.chunks():
+    ip_list = []
     for chunk in f:
-        print(chunk)
+        chunk = chunk.decode('ASCII')
+        chunk = chunk.rstrip("\n")
+        if validate_ip(chunk):
+            #print(chunk)
+            ip_list.append(chunk)
+    return ip_list
 
-
+#---------------------------------check Ipv4 is valid or not----------------
+def validate_ip(s):
+    try:
+        socket.inet_aton(s)
+        return True
+    except socket.error:
+        return False
 
 def ip2location(ip):
     regex = '''^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.( 
@@ -58,7 +81,7 @@ def ip2location(ip):
         IP2LocObj = IP2Location.IP2Location()
         IP2LocObj.open('ip2loc.BIN')
         ip2loc_result = IP2LocObj.get_all(ip)
-        print(ip2loc_result)
+        #print(ip2loc_result)
         ip2locdata['IP'] = ip
         ip2locdata['Country Short'] = ip2loc_result.country_short
         ip2locdata['Country Llong'] = ip2loc_result.country_long
@@ -82,7 +105,28 @@ def ip2location(ip):
         ip2locdata['Usage Type'] = ip2loc_result.usage_type
         return ip2locdata
     else:
-        ip2locdata['IP'] = "Error"
+        #ip2locdata['IP'] = "Error"
+        ip2locdata['IP'] = ip
+        ip2locdata['Country Short'] = '-'
+        ip2locdata['Country Llong'] = '-'
+        ip2locdata['Region'] = '-'
+        ip2locdata['City'] = '-'
+        ip2locdata['ISP'] = '-'
+        ip2locdata['Latitude'] = '-'
+        ip2locdata['Longitude'] = '-'
+        ip2locdata['Domain'] = '-'
+        ip2locdata['Zip Code'] = '-'
+        ip2locdata['Time Zone'] = '-'
+        ip2locdata['Net Speed'] = '-'
+        ip2locdata['Idd Code'] = '-'
+        ip2locdata['Area Code'] = '-'
+        ip2locdata['Weather Code'] = '-'
+        ip2locdata['Weather Name'] = '-'
+        ip2locdata['MCC'] = '-'
+        ip2locdata['MNC'] = '-'
+        ip2locdata['Mobile Brand'] = '-' 
+        ip2locdata['Elevation'] = '-'
+        ip2locdata['Usage Type'] = '-'
         return ip2locdata
 
 

@@ -1,6 +1,21 @@
 {% load static %}
 <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 
+<!--Table Link and relations-->
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css"-->
+<link href="{% static "table/buttons.bootstrap4.min.css" %}" rel="stylesheet">
+<link href="{% static "table/dataTables.bootstrap4.min.css" %}" rel="stylesheet">
+<link href="{% static "table/responsive.bootstrap4.min.css" %}" rel="stylesheet">
+
+
+
+
+<!--End Link and Relations-->
+
+
 <style>
   body {
     background-image: -webkit-gradient(linear, left bottom, left top, from(#1e3c72), color-stop(1%, #1e3c72), to(#2a5298));
@@ -16,6 +31,10 @@
   margin-left: -3px;
   top: -150px;
 }
+
+  .dropdown-item{
+    background-color: white;
+  }
 </style>
 
 
@@ -27,7 +46,10 @@
       <div class="col-sm-6">
         <div style="margin-top: 100px;">
           <div class="form-group shadow-textarea">
-            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="22" placeholder="Enter IP one per line....." name = "multiquery" ></textarea>
+            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="22" placeholder="Enter IP one per line.....
+ex:-
+127.0.0.1
+192.168.1.1" name = "multiquery" ></textarea>
           </div>
         </div>
       </div>
@@ -49,4 +71,99 @@
       </div>
     </div>
   </form>
+
+<div style="margin-bottom: 100px;"> </div>
+<!--Table HTML Start-->
+<div class="row" style="background-color: white; margin:20px; padding: 20px;">
+  <div class="col-sm-12">
+    <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
+      <thead>
+          <tr>
+            <th>IP</th>
+            <th>Country Short</th>
+            <th>Country Long</th>
+            <th>Region</th>
+            <th>City</th>
+            <th>ISP</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Domain</th>
+            <th>Zip Code</th>
+            <th>Time Zone</th>
+            <th>Net Speed</th>
+            <th>Idd Code</th>
+            <th>Area Code</th>
+            <th>Weather Code</th>
+            <th>Weather Name</th>
+            <th>MCC</th>
+            <th>MNC</th>
+            <th>Mobile Brand</th>
+            <th>Elevation</th>
+            <th>Usage Type</th>
+          </tr>
+      </thead>
+      <tbody>
+        {%for element in renderData%}
+          <tr>
+              {% for item in element.items %}
+                <td>{{ item.1 }}</td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+<!--Table HTML End-->
+
+<div style="margin-bottom: 200px;"> </div>
+</div>
+
+
+<!--Table Script-->
+<!--script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script-->
+
+<script src="{% static "table/js/jquery-3.3.1.js" %}"></script>
+<script src="{% static "table/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "table/js/dataTables.bootstrap4.min.js" %}"></script>
+<script src="{% static "table/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "table/js/buttons.bootstrap4.min.js" %}"></script>
+<script src="{% static "table/js/jszip.min.js" %}"></script>
+<script src="{% static "table/js/pdfmake.min.js" %}"></script>
+<script src="{% static "table/js/vfs_fonts.js" %}"></script>
+<script src="{% static "table/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "table/js/buttons.print.min.js" %}"></script>
+<script src="{% static "table/js/buttons.colVis.min.js" %}"></script>
+<script src="{% static "table/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "table/js/responsive.bootstrap4.min.js" %}"></script>
+
+
+<script>
+$(document).ready(function() {
+  var table = $('#example').DataTable( {
+      lengthChange: true,
+      "scrollX": true,
+      buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]
+  } );
+
+  table.buttons().container()
+      .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+} );
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
