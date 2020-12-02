@@ -4,7 +4,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
 Function views
-    1. Add an import:  from my_app import views
+    1. Add an import:  from ThreatReputation import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
@@ -19,5 +19,10 @@ from django.urls import include,path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('iprep.urls')),
-    path('multiple/', include('iprep.urls')),
+    path('accounts/', include('account.urls')),
 ]
+
+'''handler400 = 'ThreatReputation.views.bad_request'
+handler403 = 'ThreatReputation.views.permission_denied'
+handler404 = 'ThreatReputation.views.page_not_found'
+handler500 = 'ThreatReputation.views.server_error' '''
