@@ -1,0 +1,27 @@
+<script>
+    $('#kstart, #kstatus, #kstop, #estart, #estatus, #estop,#lstart, #lstatus, #lstop').click(function(event){ 
+        
+
+        if($(event.target).attr('id')=='kstart'){
+            console.log("Starting Kibana")
+        } else if($(event.target).attr('id')=='kstatus'){
+            console.log("checking Kibana Status")
+        } else if($(event.target).attr('id')=='kstop'){
+            console.log("Stop Kibana")
+        } else if($(event.target).attr('id')=='estart'){
+            console.log("Starting Elastic")
+        } else if($(event.target).attr('id')=='estatus'){
+            console.log("checking Elastic Status")
+        } else if($(event.target).attr('id')=='estop'){
+            console.log("Stop Elastic")
+        }else if($(event.target).attr('id')=='lstart'){
+            console.log("Starting Kibana")
+        } else if($(event.target).attr('id')=='lstatus'){
+            console.log("checking Logstash Status")
+        } else if($(event.target).attr('id')=='lstop'){
+            console.log("Stop Logstash")
+        } 
+    });
+</script>
+
+<!-- https://www.youtube.com/watch?v=Bfgtp62VFeU -->

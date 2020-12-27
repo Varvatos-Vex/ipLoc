@@ -1,2 +1,61 @@
-<H3>Account Home Page</H3>
-<span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" >
+    {% if title %}
+        <title>File Management - {{title}}</title>
+    {% else %}
+        <title>File Management</title>
+    {% endif %}
+
+</head>
+  <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand font-weight-bold" href=""><i class="fas fa-file"></i> File Management</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    </li>
+                   
+
+                    
+                  </ul>
+                  <!------{{ request.get_host }}/blog/search/-->
+                  <form id="searchform" action="" method="get">
+                    <input type="text" name="q" type="text" value="" placeholder="Search" />
+                    <button type="button" onclick="searchform.submit()" class=" text-white my-color btn-primary"><i class="fa fa-search"></i></button>
+                </form>
+              
+                    <a href="" class="btn text-white m-2"><i class="fas fa-user-shield"></i> Status</a>
+                    <a href="" class="btn text-white m-2"><i class="fas fa-user-edit"></i> Ingestion </a>
+                    <a href="" class="btn text-white m-2"><i class="fas fa-user"></i> {{ user.username }}</a>
+                    <a href="" class="btn text-white m-2"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+              
+                  
+                </div>
+              </nav>
+
+
+    {% block content %}
+      
+    {% endblock  %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static "table/js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "table/js/dataTables.bootstrap4.min.js" %}"></script>
+  </body>
+</html>
