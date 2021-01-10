@@ -1,5 +1,5 @@
 <script>
-    $('#kstart, #kstatus, #kstop, #estart, #estatus, #estop,#lstart, #lstatus, #lstop').click(function(event){ 
+    $('#kstart, #kstatus, #kstop, #estart, #estatus, #estop,#lstart, #lstatus, #lstop').one( "click",function(event){ 
         
 
         if($(event.target).attr('id')=='kstart'){

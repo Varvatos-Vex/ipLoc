@@ -16,7 +16,7 @@ from .forms import CreateUserForm
 
 def registerPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('accounts')
     else:
         form = CreateUserForm()
         if request.method == 'POST':
@@ -33,7 +33,7 @@ def registerPage(request):
 
 def loginPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('accounts')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -43,7 +43,7 @@ def loginPage(request):
             
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('accounts')
             else:
                 messages.info(request, 'Username OR password is incorrect')
                 
@@ -58,3 +58,7 @@ def logoutUser(request):
 @login_required(login_url='login')
 def home_view(request):
     return render(request, "accounts/services.html")
+
+
+def ingestion(request):
+    return render(request, "accounts/ingestion.html")
