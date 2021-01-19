@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 #Download all file in root user
 Django==3.1.2
 django-static-fontawesome
 IP2Location
 shutil
+=======
+Django==3.1.2
+django-static-fontawesome
+IP2Location
+>>>>>>> 9eeefcff9ad99be9b9b2750d97c78d3237465411

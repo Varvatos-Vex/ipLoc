@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('account.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
 '''handler400 = 'ThreatReputation.views.bad_request'
 handler403 = 'ThreatReputation.views.permission_denied'
 handler404 = 'ThreatReputation.views.page_not_found'
