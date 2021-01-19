@@ -1,0 +1,49 @@
+{% extends "accounts/main.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row container-fluid">
+    <div class="col-lg-3"> </div>
+    <div class="col-lg-6"> 
+        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow" style = "background-color: purple;">
+            <h6 class="text-white">File Ingestion</h6>
+        </div>
+        
+
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Example file input</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="ingestion_file">
+              </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Select Index</label>
+              <select class="form-control" id="exampleFormControlSelect1"  name = "SelectIndex">
+                <option>Data Lake</option>
+                <option>Data Lake TA</option>
+                <option>Compendium</option>
+                <option>TPI</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+          
+
+        
+    </div>
+    <div class="col-lg-3"> </div>
+</div>
+
+
+
+
+
+
+
+<script src="{% static "table/js/jquery-3.3.1.js" %}"></script>
+
+{% include "accounts/ajaxservice.html" %}
+
+{% endblock content %}

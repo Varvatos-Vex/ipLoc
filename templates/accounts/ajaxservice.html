@@ -1,0 +1,57 @@
+<script>
+    var kstart = $("#kstart"), krestart = $("#krestart"), kstop = $("#kstop");
+    var estart = $("#estart"), erestart = $("#erestart"), estop = $("#estop");
+    var lstart = $("#lstart"), lrestart = $("#lrestart"), lstop = $("#lstop");
+
+    $('#kstart, #krestart, #kstop, #estart, #erestart, #estop,#lstart, #lrestart, #lstop').click(function(event){ 
+
+
+        $.ajax( 
+            { 
+                type:"GET", 
+                url: "/accounts/services", 
+                data:{ 
+                    service: $(event.target).attr('id') 
+            }, 
+            success: function( data ) 
+            { 
+            console.log(data) 
+            if(data=="Success"){
+                if($(event.target).attr('id')=='kstart'){
+                    console.log("Starting Kibana")
+                    $("#kibanaBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='krestart'){
+                    console.log("checking Kibana restart")
+                    $("#kibanaBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='kstop'){
+                    console.log("Stop Kibana")
+                    $("#kibanaBadge").attr('class','badge badge-danger')
+                } else if($(event.target).attr('id')=='estart'){
+                    console.log("Starting Elastic")
+                    $("#elasticBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='erestart'){
+                    console.log("checking Elastic restart")
+                    $("#elasticBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='estop'){
+                    console.log("Stop Elastic")
+                    $("#elasticBadge").attr('class','badge badge-danger')
+                } else if($(event.target).attr('id')=='lstart'){
+                    console.log("Starting logstash")
+                    $("#logstashBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='lrestart'){
+                    console.log("checking Logstash restart")
+                    $("#logstashBadge").attr('class','badge badge-success')
+                } else if($(event.target).attr('id')=='lstop'){
+                    console.log("Stop Logstash")
+                    $("#logstashBadge").attr('class','badge badge-danger')
+                } 
+            }
+            else{
+                console.log("Failed") 
+            }
+          } 
+        })
+    });
+</script>
+
+<!-- https://www.youtube.com/watch?v=Bfgtp62VFeU -->

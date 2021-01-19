@@ -1,0 +1,5 @@
+#Download all file in root user
+Django==3.1.2
+django-static-fontawesome
+IP2Location
+shutil
