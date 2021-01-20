@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
-
+from django.http import JsonResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -12,9 +12,11 @@ from django.conf import settings
 import os
 from datetime import datetime
 import shutil
-
+import json
 import sys
 import subprocess
+from django.http import HttpResponse, Http404
+import mimetypes
 
 # Create your views here.
 from .forms import CreateUserForm
@@ -285,3 +287,47 @@ class ServiceMonitor(object):
                 return False
         except:
             return False
+
+
+
+
+
+#---------------------------File Service-------------------
+@login_required
+def fileserver(request):
+    listFile = []
+    DictFile = {}
+    currDir = '/home/user/Desktop/kavach'
+    listDir = path_to_dict(currDir)
+    print(listDir)
+    return JsonResponse(listDir)
+
+
+
+def path_to_dict(path):
+    d = {'name': os.path.basename(path)}
+    if os.path.isdir(path):
+        d['type'] = "directory"
+        d['children'] = [path_to_dict(os.path.join(path,x)) for x in os.listdir(path)]
+    else:
+        d['type'] = "file"
+    return d
+
+
+
+
+#---------------------Download--------------------
+@login_required
+def download(request):
+    filename = request.GET.get('q')
+    #file_path = os.path.join(settings.MEDIA_ROOT, path)
+    currDir = '/home/user/Desktop/kavach/'
+    file_path = currDir + filename
+    
+    if os.path.exists(file_path):
+        mime_type, _ = mimetypes.guess_type(file_path)
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(),content_type=mime_type)
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
